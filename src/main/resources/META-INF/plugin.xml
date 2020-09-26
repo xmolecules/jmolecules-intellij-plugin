@@ -1,0 +1,12 @@
+<idea-plugin>
+  <id>jddd</id>
+  <name>jDDD</name>
+  <version>0.1</version>
+  <vendor email="bernd@dutkow.ski" url="https://github.com/nexoscp/">neXos</vendor>
+  <depends>com.intellij.modules.platform</depends>
+  <depends>com.intellij.modules.lang</depends>
+  <depends>com.intellij.modules.java</depends>
+  <extensions defaultExtensionNs="com.intellij">
+    <projectViewNodeDecorator implementation="nexos.intellij.jddd.Decorator" />
+  </extensions>
+</idea-plugin>
