@@ -19,11 +19,19 @@ class Decorator : ProjectViewNodeDecorator {
                     val psiFile = PsiManager.getInstance(project).findFile(virtualFile)
                     if (psiFile is PsiJavaFile) {
                         decorateByAnnotations(findTopLevelClassAnnotations(psiFile), data)
+                        decorateByAnnotations(findPackageAnnotations(psiFile), data)
                     }
                 }
             }
         }
     }
+
+    private fun findPackageAnnotations(psiFile: PsiJavaFile) =
+            psiFile.packageStatement
+                    ?.annotationList
+                    ?.annotations
+                    ?.mapNotNull { it.qualifiedName }
+                    ?: listOf()
 
     private fun findTopLevelClassAnnotations(psiFile: PsiJavaFile): List<String>
         = psiFile.classes.map { clazz ->
@@ -33,9 +41,38 @@ class Decorator : ProjectViewNodeDecorator {
         }.flatten()
 
     private fun decorateByAnnotations(annotations: List<String>, data: PresentationData) {
-       if (annotations.contains("org.jddd.core.annotation.AggregateRoot")) {
-           data.locationString = "Aggregate Root"
-       }
+        when {
+            annotations.contains("org.jddd.core.annotation.AggregateRoot") -> {
+                data.locationString = "Aggregate Root"
+            }
+            annotations.contains("org.jddd.core.annotation.Entity") -> {
+                data.locationString = "Entity"
+            }
+            annotations.contains("org.jddd.core.annotation.Factory") -> {
+                data.locationString = "Factory"
+            }
+            annotations.contains("org.jddd.core.annotation.Service") -> {
+                data.locationString = "Service"
+            }
+            annotations.contains("org.jddd.core.annotation.ValueObject") -> {
+                data.locationString = "Value Object"
+            }
+            annotations.contains("org.jddd.architecture.layered.ApplicationLayer") -> {
+                data.locationString = "Application Layer"
+            }
+            annotations.contains("org.jddd.architecture.layered.DomainLayer") -> {
+                data.locationString = "Domain Layer"
+            }
+            annotations.contains("org.jddd.architecture.layered.InfrastructureLayer") -> {
+                data.locationString = "Infrastructure Layer"
+            }
+            annotations.contains("org.jddd.architecture.layered.InterfaceLayer") -> {
+                data.locationString = "Interface Layer"
+            }
+            annotations.contains("org.jddd.event.annotation.DomainEvent") -> {
+                data.locationString = "Domain Event"
+            }
+        }
     }
 
     override fun decorate(node: PackageDependenciesNode?, cellRenderer: ColoredTreeCellRenderer?) {}
