@@ -10,7 +10,7 @@ class Startup : StartupActivity {
         val scopeManager = NamedScopeManager.getInstance(project)
         val psiManager = PsiManager.getInstance(project)
         val scopesToAdd = annotations.associateBy { it.displayName }.toMutableMap()
-        scopeManager.scopes.forEach {
+        scopeManager.editableScopes.forEach {
             val name = it.name
             if (scopesToAdd.containsKey(name)) {
                 scopesToAdd.remove(name)
