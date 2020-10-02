@@ -8,7 +8,6 @@ import com.intellij.psi.search.scope.packageSet.NamedScopeManager
 class Startup : StartupActivity {
     override fun runActivity(project: Project) {
         val scopeManager = NamedScopeManager.getInstance(project)
-        val psiManager = PsiManager.getInstance(project)
         val scopesToAdd = annotations.associateBy { it.displayName }.toMutableMap()
         scopeManager.editableScopes.forEach {
             val name = it.name
@@ -17,7 +16,7 @@ class Startup : StartupActivity {
             }
         }
         scopesToAdd.forEach {
-            scopeManager.addScope(createNamedScope(psiManager, it.value))
+            scopeManager.addScope(createNamedScope(it.value))
         }
     }
 }
