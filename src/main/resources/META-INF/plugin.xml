@@ -10,6 +10,6 @@
     <projectViewNodeDecorator implementation="nexos.intellij.jddd.Decorator" />
     <facetType implementation="nexos.intellij.jddd.JDDDFacetType" />
     <frameworkSupport implementation="nexos.intellij.jddd.Support" />
-    <postStartupActivity implementation="nexos.intellij.jddd.Startup" />
+    <customScopesProvider implementation="nexos.intellij.jddd.Scopes" />
   </extensions>
 </idea-plugin>
