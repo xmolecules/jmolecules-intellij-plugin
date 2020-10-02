@@ -4,10 +4,12 @@ import com.intellij.ide.highlighter.JavaFileType
 import com.intellij.ide.projectView.PresentationData
 import com.intellij.ide.projectView.ProjectViewNode
 import com.intellij.ide.projectView.ProjectViewNodeDecorator
+import com.intellij.openapi.editor.markup.TextAttributes
 import com.intellij.packageDependencies.ui.PackageDependenciesNode
 import com.intellij.psi.PsiJavaFile
 import com.intellij.psi.PsiManager
 import com.intellij.ui.ColoredTreeCellRenderer
+import com.intellij.ui.SimpleTextAttributes.fromTextAttributes
 
 class Decorator : ProjectViewNodeDecorator {
     override fun decorate(node: ProjectViewNode<*>?, data: PresentationData?) {
@@ -36,44 +38,22 @@ class Decorator : ProjectViewNodeDecorator {
     private fun findTopLevelClassAnnotations(psiFile: PsiJavaFile): List<String>
         = psiFile.classes.map { clazz ->
             clazz.annotations.mapNotNull { annotation ->
-                annotation.nameReferenceElement?.canonicalText
+                annotation.nameReferenceElement?.qualifiedName
             }
         }.flatten()
 
-    private fun decorateByAnnotations(annotations: List<String>, data: PresentationData) {
-        when {
-            annotations.contains("org.jddd.core.annotation.AggregateRoot") -> {
-                data.locationString = "Aggregate Root"
-            }
-            annotations.contains("org.jddd.core.annotation.Entity") -> {
-                data.locationString = "Entity"
-            }
-            annotations.contains("org.jddd.core.annotation.Factory") -> {
-                data.locationString = "Factory"
-            }
-            annotations.contains("org.jddd.core.annotation.Service") -> {
-                data.locationString = "Service"
-            }
-            annotations.contains("org.jddd.core.annotation.ValueObject") -> {
-                data.locationString = "Value Object"
-            }
-            annotations.contains("org.jddd.architecture.layered.ApplicationLayer") -> {
-                data.locationString = "Application Layer"
-            }
-            annotations.contains("org.jddd.architecture.layered.DomainLayer") -> {
-                data.locationString = "Domain Layer"
-            }
-            annotations.contains("org.jddd.architecture.layered.InfrastructureLayer") -> {
-                data.locationString = "Infrastructure Layer"
-            }
-            annotations.contains("org.jddd.architecture.layered.InterfaceLayer") -> {
-                data.locationString = "Interface Layer"
-            }
-            annotations.contains("org.jddd.event.annotation.DomainEvent") -> {
-                data.locationString = "Domain Event"
+    private fun decorateByAnnotations(anno: List<String>, data: PresentationData) {
+        val filterAnnotations = filterAnnotations(anno)
+        if (filterAnnotations.isNotEmpty()) {
+            data.locationString = filterAnnotations.joinToString(separator = " ") { it.displayName }
+            filterAnnotations.forEach {
+               // data.addText(it.displayName, fromTextAttributes( it.attributesDescriptor))
+                data.setAttributesKey(it.textAttributesKey)
             }
         }
     }
 
     override fun decorate(node: PackageDependenciesNode?, cellRenderer: ColoredTreeCellRenderer?) {}
 }
+
+fun filterAnnotations(anno: List<String>) = annotations.filter { anno.contains(it.fqName) }

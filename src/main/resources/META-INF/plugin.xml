@@ -8,5 +8,8 @@
   <depends>com.intellij.modules.java</depends>
   <extensions defaultExtensionNs="com.intellij">
     <projectViewNodeDecorator implementation="nexos.intellij.jddd.Decorator" />
+    <colorSettingsPage implementation="nexos.intellij.jddd.ColorSettings" />
+    <facetType implementation="nexos.intellij.jddd.JDDDFacetType" />
+    <frameworkSupport implementation="nexos.intellij.jddd.Support" />
   </extensions>
 </idea-plugin>
