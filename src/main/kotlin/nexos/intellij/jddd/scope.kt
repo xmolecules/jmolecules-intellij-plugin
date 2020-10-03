@@ -33,6 +33,9 @@ class JDDDNamedScope(private val info:Info):
 }
 
 class Scopes : CustomScopesProvider {
-    private val scopes by lazy { annotations.map { JDDDNamedScope(it) }.toMutableList() }
+    companion object {
+        private val scopes: MutableList<JDDDNamedScope> by lazy { Info.all.map { JDDDNamedScope(it) }.toMutableList() }
+    }
+
     override fun getCustomScopes() = scopes
 }

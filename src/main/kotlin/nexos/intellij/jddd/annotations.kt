@@ -1,6 +1,10 @@
 package nexos.intellij.jddd
 
-data class Info(val fqName: String, val displayName: String, val defaultColorName: String?)
+data class Info(val fqName: String, val displayName: String, val defaultColorName: String?) {
+    companion object {
+        val all by lazy { listOf(Repository, AggregateRoot, Entity, Factory, Service, ValueObject, ApplicationLayer, DomainLayer, InfrastructureLayer, InterfaceLayer, DomainEvent) }
+    }
+}
 
 val Repository = Info("org.jddd.core.annotation.Repository", "Repository", null)
 val AggregateRoot = Info("org.jddd.core.annotation.AggregateRoot", "AggregateRoot", null)
@@ -14,5 +18,3 @@ val InfrastructureLayer = Info("org.jddd.architecture.layered.InfrastructureLaye
 val InterfaceLayer = Info("org.jddd.architecture.layered.InterfaceLayer","InterfaceLayer", null)
 val DomainEvent = Info("org.jddd.event.annotation.DomainEvent", "DomainEvent", null)
 
-val annotations by lazy { listOf(Repository, AggregateRoot, Entity, Factory, Service, ValueObject, ApplicationLayer, DomainLayer, InfrastructureLayer, InterfaceLayer, DomainEvent) }
-val annotationsByFQName by lazy { annotations.associateBy { it.fqName }}
