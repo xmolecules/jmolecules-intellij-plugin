@@ -16,8 +16,7 @@ class JDDDPackageSet(private val info: Info):
         if (holder != null && file.fileType == JavaFileType.INSTANCE) {
             val psi = getPsiFile(file, holder.project)
             if (psi is PsiJavaFile) {
-                return findPackageAnnotations(psi).contains(info)
-                   || findTopLevelClassAnnotations(psi).contains(info)
+                return cached(psi).contains(info)
             }
         }
         return false
