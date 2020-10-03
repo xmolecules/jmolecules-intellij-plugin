@@ -17,8 +17,10 @@ class Decorator : ProjectViewNodeDecorator {
             if (project != null && virtualFile != null && virtualFile.fileType == JavaFileType.INSTANCE) {
                 val psiFile = PsiManager.getInstance(project).findFile(virtualFile)
                 if (psiFile is PsiJavaFile) {
-                    decorateByAnnotations(findTopLevelClassAnnotations(psiFile), data)
-                    decorateByAnnotations(findPackageAnnotations(psiFile), data)
+                    decorateByAnnotations(
+                            findTopLevelClassAnnotations(psiFile)
+                            + findPackageAnnotations(psiFile)
+                            , data)
                 }
             }
         }

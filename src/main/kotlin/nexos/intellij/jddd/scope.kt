@@ -28,10 +28,12 @@ class JDDDPackageSet(private val info: Info):
     override fun getText() = info.displayName
 }
 
-class JDDDNamedScope(private val info:Info): NamedScope(info.displayName, AllIcons.Ide.LocalScope, JDDDPackageSet(info)) {
+class JDDDNamedScope(private val info:Info):
+        NamedScope(info.displayName, AllIcons.Ide.LocalScope, JDDDPackageSet(info)) {
     override fun getDefaultColorName() = info.defaultColorName
 }
 
 class Scopes : CustomScopesProvider {
-    override fun getCustomScopes() = annotations.map { JDDDNamedScope(it) }.toMutableList()
+    private val scopes by lazy { annotations.map { JDDDNamedScope(it) }.toMutableList() }
+    override fun getCustomScopes() = scopes
 }
