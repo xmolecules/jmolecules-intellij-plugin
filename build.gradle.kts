@@ -28,6 +28,8 @@ plugins {
   id("org.jetbrains.intellij") version "0.4.22"
 }
 
+//val pluginVersion: String by project
+
 tasks.withType<JavaCompile> {
   sourceCompatibility = "11"
   targetCompatibility = "11"
@@ -45,4 +47,9 @@ intellij {
   version = "2020.2.2"
   downloadSources = true
   setPlugins("java")
+}
+
+tasks.publishPlugin {
+  token(System.getenv("PUBLISH_TOKEN"))
+  channels(version.toString().split('-').getOrElse(1) { "default" }.split('.').first())
 }

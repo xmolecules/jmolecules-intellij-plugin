@@ -27,11 +27,8 @@ class Decorator : ProjectViewNodeDecorator {
     override fun decorate(node: PackageDependenciesNode?, cellRenderer: ColoredTreeCellRenderer?) {}
 }
 
-private fun decorateByAnnotations(anno: List<String>, data: PresentationData) {
-    val filterAnnotations = filterAnnotations(anno)
-    if (filterAnnotations.isNotEmpty()) {
-        data.locationString = filterAnnotations.joinToString(separator = " ", ) { '\u00AB' + it.displayName + '\u00BB' }
+private fun decorateByAnnotations(anno: List<Info>, data: PresentationData) {
+    if (anno.isNotEmpty()) {
+        data.locationString = anno.joinToString(separator = " ", ) { '\u00AB' + it.displayName + '\u00BB' }
     }
 }
-
-private fun filterAnnotations(anno: List<String>) = annotations.filter { anno.contains(it.fqName) }

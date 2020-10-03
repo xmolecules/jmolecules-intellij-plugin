@@ -6,12 +6,9 @@ fun findPackageAnnotations(psiFile: PsiJavaFile) =
         psiFile.packageStatement
                 ?.annotationList
                 ?.annotations
-                ?.mapNotNull { it.qualifiedName }
+                ?.mapNotNull { annotationsByFQName[it.qualifiedName] }
                 ?: listOf()
 
-fun findTopLevelClassAnnotations(psiFile: PsiJavaFile): List<String>
-        = psiFile.classes.map { clazz ->
-    clazz.annotations.mapNotNull { annotation ->
-        annotation.nameReferenceElement?.qualifiedName
-    }
+fun findTopLevelClassAnnotations(psiFile: PsiJavaFile) = psiFile.classes.map { clazz ->
+    clazz.annotations.mapNotNull { annotationsByFQName[it.qualifiedName] }
 }.flatten()

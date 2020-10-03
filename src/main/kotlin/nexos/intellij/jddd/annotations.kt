@@ -15,3 +15,4 @@ val InterfaceLayer = Info("org.jddd.architecture.layered.InterfaceLayer","Interf
 val DomainEvent = Info("org.jddd.event.annotation.DomainEvent", "DomainEvent", null)
 
 val annotations by lazy { listOf(Repository, AggregateRoot, Entity, Factory, Service, ValueObject, ApplicationLayer, DomainLayer, InfrastructureLayer, InterfaceLayer, DomainEvent) }
+val annotationsByFQName by lazy { annotations.associateBy { it.fqName }}

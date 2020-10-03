@@ -11,12 +11,13 @@ import com.intellij.psi.search.scope.packageSet.NamedScopesHolder
 
 class JDDDPackageSet(private val info: Info):
         AbstractPackageSet(info.displayName, 1) {
+
     override fun contains(file: VirtualFile, holder: NamedScopesHolder?): Boolean {
-        val project = holder?.project
-        if(project != null && file.fileType == JavaFileType.INSTANCE) {
-            val psi = getPsiFile(file, project)
+        if (holder != null && file.fileType == JavaFileType.INSTANCE) {
+            val psi = getPsiFile(file, holder.project)
             if (psi is PsiJavaFile) {
-                return contains(findPackageAnnotations(psi)) || contains(findTopLevelClassAnnotations(psi))
+                return findPackageAnnotations(psi).contains(info)
+                   || findTopLevelClassAnnotations(psi).contains(info)
             }
         }
         return false
@@ -25,8 +26,6 @@ class JDDDPackageSet(private val info: Info):
     override fun createCopy() = JDDDPackageSet(info)
 
     override fun getText() = info.displayName
-
-    private fun contains(annos: List<String>) =  annos.contains(info.fqName)
 }
 
 class JDDDNamedScope(private val info:Info): NamedScope(info.displayName, AllIcons.Ide.LocalScope, JDDDPackageSet(info)) {
