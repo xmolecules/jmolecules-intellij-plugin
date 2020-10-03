@@ -1,5 +1,6 @@
 package nexos.intellij.jddd
 
+import com.intellij.icons.AllIcons
 import com.intellij.ide.highlighter.JavaFileType
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiJavaFile
@@ -8,7 +9,7 @@ import com.intellij.psi.search.scope.packageSet.CustomScopesProvider
 import com.intellij.psi.search.scope.packageSet.NamedScope
 import com.intellij.psi.search.scope.packageSet.NamedScopesHolder
 
-class JDDDPackageSet(private val info:Info):
+class JDDDPackageSet(private val info: Info):
         AbstractPackageSet(info.displayName, 1) {
     override fun contains(file: VirtualFile, holder: NamedScopesHolder?): Boolean {
         val project = holder?.project
@@ -28,10 +29,10 @@ class JDDDPackageSet(private val info:Info):
     private fun contains(annos: List<String>) =  annos.contains(info.fqName)
 }
 
-fun createNamedScope(info: Info) = NamedScope(info.displayName, JDDDPackageSet(info))
+class JDDDNamedScope(private val info:Info): NamedScope(info.displayName, AllIcons.Ide.LocalScope, JDDDPackageSet(info)) {
+    override fun getDefaultColorName() = info.defaultColorName
+}
 
 class Scopes : CustomScopesProvider {
-    override fun getCustomScopes(): MutableList<NamedScope> {
-        return annotations.map { createNamedScope(it) }.toMutableList()
-    }
+    override fun getCustomScopes() = annotations.map { JDDDNamedScope(it) }.toMutableList()
 }

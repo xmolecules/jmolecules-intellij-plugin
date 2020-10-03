@@ -35,4 +35,3 @@ private fun decorateByAnnotations(anno: List<String>, data: PresentationData) {
 }
 
 private fun filterAnnotations(anno: List<String>) = annotations.filter { anno.contains(it.fqName) }
-
