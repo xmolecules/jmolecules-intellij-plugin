@@ -9,7 +9,7 @@ import com.intellij.psi.search.scope.packageSet.CustomScopesProvider
 import com.intellij.psi.search.scope.packageSet.NamedScope
 import com.intellij.psi.search.scope.packageSet.NamedScopesHolder
 
-class JDDDPackageSet(private val info: Info):
+private class JDDDPackageSet(private val info: Info):
         AbstractPackageSet(info.displayName, 1) {
 
     override fun contains(file: VirtualFile, holder: NamedScopesHolder?): Boolean {
@@ -27,14 +27,14 @@ class JDDDPackageSet(private val info: Info):
     override fun getText() = info.displayName
 }
 
-class JDDDNamedScope(private val info:Info):
+private class JDDDNamedScope(private val info:Info):
         NamedScope(info.displayName, AllIcons.Ide.LocalScope, JDDDPackageSet(info)) {
     override fun getDefaultColorName() = info.defaultColorName
 }
 
 class Scopes : CustomScopesProvider {
     companion object {
-        private val scopes: MutableList<JDDDNamedScope> by lazy { Info.all.map { JDDDNamedScope(it) }.toMutableList() }
+        private val scopes: MutableList<NamedScope> by lazy { Info.all.map { JDDDNamedScope(it) }.toMutableList() }
     }
 
     override fun getCustomScopes() = scopes
