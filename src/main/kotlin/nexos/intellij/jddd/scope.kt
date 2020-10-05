@@ -25,11 +25,31 @@ private class JDDDPackageSet(private val info: Info):
     override fun createCopy() = JDDDPackageSet(info)
 
     override fun getText() = info.displayName
+
+    override fun equals(other: Any?): Boolean {
+        if(other is JDDDPackageSet) {
+            return info == other.info
+        }
+        return false
+    }
+
+    override fun hashCode(): Int = info.hashCode()
 }
 
 private class JDDDNamedScope(private val info:Info):
         NamedScope(info.displayName, AllIcons.Ide.LocalScope, JDDDPackageSet(info)) {
     override fun getDefaultColorName() = info.defaultColorName
+
+    override fun createCopy() = JDDDNamedScope(info)
+
+    override fun equals(other: Any?): Boolean {
+        if (other is JDDDNamedScope) {
+            return info == other.info
+        }
+        return false
+    }
+
+    override fun hashCode(): Int = info.hashCode()
 }
 
 class Scopes : CustomScopesProvider {
