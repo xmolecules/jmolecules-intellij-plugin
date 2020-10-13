@@ -44,9 +44,9 @@ tasks.withType<KotlinCompile> {
 }
 
 intellij {
-  version = "2020.2.2"
+  version = "2020.2.3"
   downloadSources = true
-  setPlugins("java")
+  setPlugins("java", "org.jetbrains.plugins.gradle", "gradle")
 }
 
 tasks.publishPlugin {

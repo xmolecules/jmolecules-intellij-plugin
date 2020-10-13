@@ -1,26 +1,33 @@
 <idea-plugin>
-  <id>jddd</id>
-  <name>jDDD</name>
-  <vendor email="bernd@dutkow.ski" url="https://github.com/nexoscp/">neXos</vendor>
-  <depends>com.intellij.modules.platform</depends>
-  <depends>com.intellij.modules.lang</depends>
-  <depends>com.intellij.modules.java</depends>
-  <description>
+    <id>jddd</id>
+    <name>jDDD</name>
+    <vendor email="bernd@dutkow.ski" url="https://github.com/nexoscp/intellij-jddd">neXos</vendor>
+    <depends optional="true" config-file="gradle.xml">org.jetbrains.plugins.gradle</depends>
+    <depends>com.intellij.modules.java</depends>
+    <depends>com.intellij.java</depends>
+    <description>
     <![CDATA[
-    <p>Providing scopes derived from <a href="https://github.com/odrotbohm/jddd">jDDD</a>
-    annotations for <a href="https://www.jetbrains.com/help/idea/settings-file-colors.html">File Colors</a>.</p>
-    <p>Stereotypes</p>
-    <p>External library resolver</p>
-    <p>Facet and framework support under way.</p>
-    <p>More to come.</p>
-    ]]>
+        <p>Providing scopes derived from <a href="https://github.com/odrotbohm/jddd">jDDD</a>
+            annotations for <a href="https://www.jetbrains.com/help/idea/settings-file-colors.html">File Colors</a>.</p>
+        <p>Stereotypes</p>
+        <p>External library resolver</p>
+        <p>Facet and framework support under way.</p>
+        <p>More to come.</p>
+        ]]>
   </description>
-  <extensions defaultExtensionNs="com.intellij">
-    <projectViewNodeDecorator implementation="nexos.intellij.jddd.Decorator" />
-    <!-- facetType implementation="nexos.intellij.jddd.JDDDFacetType" / -->
-    <!-- frameworkSupport implementation="nexos.intellij.jddd.Support" / -->
-    <customScopesProvider implementation="nexos.intellij.jddd.Scopes" />
-    <!-- framework.detector implementation="nexos.intellij.jddd.Detector" / -->
-   <codeInsight.externalLibraryResolver implementation="nexos.intellij.jddd.JDDDLibraryResolver" />
-  </extensions>
+    <extensions defaultExtensionNs="com.intellij">
+        <projectViewNodeDecorator implementation="nexos.intellij.jddd.Decorator"/>
+        <facetType implementation="nexos.intellij.jddd.CoreFacetType"/>
+        <facetType implementation="nexos.intellij.jddd.DomainEventType"/>
+        <frameworkSupport implementation="nexos.intellij.jddd.Support"/>
+        <customScopesProvider implementation="nexos.intellij.jddd.Scopes"/>
+    </extensions>
+    <extensions defaultExtensionNs="com.intellij.framework">
+        <type implementation="nexos.intellij.jddd.gradle.CoreFramework"/>
+        <type implementation="nexos.intellij.jddd.gradle.DomainEventFramework"/>
+        <!-- detector implementation="nexos.intellij.jddd.Detector"/ -->
+    </extensions>
+    <extensions defaultExtensionNs="com.intellij.codeInsight">
+        <externalLibraryResolver implementation="nexos.intellij.jddd.JDDDLibraryResolver"/>
+    </extensions>
 </idea-plugin>
