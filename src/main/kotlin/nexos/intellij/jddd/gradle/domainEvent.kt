@@ -1,16 +1,16 @@
 package nexos.intellij.jddd.gradle
 
-import nexos.intellij.jddd.domainEventLib
+import nexos.intellij.jddd.DomainEventLib
 
-class DomainEventProvider: Provider(domainEventLib) {
+class DomainEventProvider: Provider(DomainEventLib) {
     companion object {
-          val INSTANCE = CoreProvider()
+          val INSTANCE = DomainEventProvider()
     }
 
     override fun getFrameworkType() = DomainEventFramework.INSTANCE
 }
 
-class DomainEventFramework: FrameworkType(domainEventLib) {
+class DomainEventFramework: FrameworkType(DomainEventLib) {
     companion object {
         val INSTANCE = DomainEventFramework()
     }

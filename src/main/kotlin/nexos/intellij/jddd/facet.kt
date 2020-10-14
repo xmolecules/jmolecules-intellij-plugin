@@ -31,17 +31,21 @@ class JDDDFacet(
         underlyingFacet: Facet<*>?):
         Facet<JDDDConfiguration>(facetType, module, name, configuration, underlyingFacet)
 
-class CoreFacetType: JDDDFacetType(ID, core) {
+class CoreFacetType: JDDDFacetType(ID, CoreLib) {
     companion object {
         val ID = FacetTypeId<JDDDFacet>("jDDD core")
-        val INSTANCE = CoreFacetType()
     }
 }
 
-class DomainEventType: JDDDFacetType(ID, domainEventLib) {
+class DomainEventType: JDDDFacetType(ID, DomainEventLib) {
     companion object {
-        val ID = FacetTypeId<JDDDFacet>("jDDD domain event")
-        val INSTANCE = DomainEventType()
+        val ID = FacetTypeId<JDDDFacet>("jDDD Domain Event")
+    }
+}
+
+class ArchitectureLayeredType: JDDDFacetType(ID, ArchitectureLayeredLib) {
+    companion object {
+        val ID = FacetTypeId<JDDDFacet>("jDDD Architecture Layered")
     }
 }
 

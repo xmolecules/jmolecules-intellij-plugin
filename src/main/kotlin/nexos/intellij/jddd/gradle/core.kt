@@ -1,8 +1,8 @@
 package nexos.intellij.jddd.gradle
 
-import nexos.intellij.jddd.core
+import nexos.intellij.jddd.CoreLib
 
-class CoreProvider: Provider(core) {
+class CoreProvider: Provider(CoreLib) {
     companion object {
           val INSTANCE = CoreProvider()
     }
@@ -10,7 +10,7 @@ class CoreProvider: Provider(core) {
     override fun getFrameworkType() = CoreFramework.INSTANCE
 }
 
-class CoreFramework: FrameworkType(core) {
+class CoreFramework: FrameworkType(CoreLib) {
     companion object {
         val INSTANCE = CoreFramework()
     }

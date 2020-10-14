@@ -19,13 +19,14 @@
         <projectViewNodeDecorator implementation="nexos.intellij.jddd.Decorator"/>
         <facetType implementation="nexos.intellij.jddd.CoreFacetType"/>
         <facetType implementation="nexos.intellij.jddd.DomainEventType"/>
+        <facetType implementation="nexos.intellij.jddd.ArchitectureLayeredType"/>
         <frameworkSupport implementation="nexos.intellij.jddd.Support"/>
         <customScopesProvider implementation="nexos.intellij.jddd.Scopes"/>
     </extensions>
     <extensions defaultExtensionNs="com.intellij.framework">
         <type implementation="nexos.intellij.jddd.gradle.CoreFramework"/>
         <type implementation="nexos.intellij.jddd.gradle.DomainEventFramework"/>
-        <!-- detector implementation="nexos.intellij.jddd.Detector"/ -->
+        <type implementation="nexos.intellij.jddd.gradle.ArchitectureLayeredFramework"/>
     </extensions>
     <extensions defaultExtensionNs="com.intellij.codeInsight">
         <externalLibraryResolver implementation="nexos.intellij.jddd.JDDDLibraryResolver"/>
