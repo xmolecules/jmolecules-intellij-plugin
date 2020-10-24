@@ -7,7 +7,7 @@
     <depends>com.intellij.java</depends>
     <description>
     <![CDATA[
-        <p>Providing scopes for <a href="https://github.com/odrotbohm/jddd">jDDD</a> and <a href="http://jmolecules.org/">jMolecules</a>
+        <p>Providing scopes for JPA, <a href="https://github.com/odrotbohm/jddd">jDDD</a> and <a href="http://jmolecules.org/">jMolecules</a>
             annotations for <a href="https://www.jetbrains.com/help/idea/settings-file-colors.html">File Colors</a>.</p>
         <p>Stereotypes</p>
         <p>External library resolver</p>
@@ -17,6 +17,7 @@
     <change-notes>
         <![CDATA[
             <ol>
+                <li>0.4: Added support for JPA</li>
                 <li>0.3: Added support for <a href="http://jmolecules.org/">jMolecules</a></li>
                 <li>0.2 Finalised support for <a href="https://github.com/odrotbohm/jddd">jDDD</a></li>
                 <li>0.1 Added support for <a href="https://github.com/odrotbohm/jddd">jDDD</a></li>

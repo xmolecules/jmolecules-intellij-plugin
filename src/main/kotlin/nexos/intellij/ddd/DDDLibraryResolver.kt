@@ -14,6 +14,7 @@ import com.intellij.util.ThreeState.NO
  */
 class DDDLibraryResolver : ExternalLibraryResolver() {
     companion object {
+        //FIXME create fqName.typename => Info
         val names by lazy { all.associateBy { it.concept.name.toLowerCase() } }
     }
 
