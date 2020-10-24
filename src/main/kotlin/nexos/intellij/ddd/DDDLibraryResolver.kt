@@ -1,4 +1,4 @@
-package nexos.intellij.jddd
+package nexos.intellij.ddd
 
 import com.intellij.codeInsight.daemon.quickFix.ExternalLibraryResolver
 import com.intellij.openapi.module.Module
@@ -12,9 +12,9 @@ import com.intellij.util.ThreeState.NO
  *
  * Example: Type "@service" Auto completion to "@Service", adding import statement and asking to import library.
  */
-class JDDDLibraryResolver : ExternalLibraryResolver() {
+class DDDLibraryResolver : ExternalLibraryResolver() {
     companion object {
-        val names by lazy { Info.all.associateBy { it.displayName.toLowerCase() } }
+        val names by lazy { all.associateBy { it.concept.name.toLowerCase() } }
     }
 
     override fun resolveClass(shortClassName: String, isAnnotation: ThreeState, contextModule: Module): ExternalClassResolveResult? {
@@ -24,5 +24,5 @@ class JDDDLibraryResolver : ExternalLibraryResolver() {
         return null
     }
 
-    private fun result(info: Info) = ExternalClassResolveResult(info.fqName, info.lib)
+    private fun result(info: Info) = ExternalClassResolveResult(info.fqName, info.library.externalLibrary)
 }

@@ -1,4 +1,4 @@
-package nexos.intellij.jddd
+package nexos.intellij.ddd
 
 import com.intellij.ide.highlighter.JavaFileType
 import com.intellij.ide.projectView.PresentationData
@@ -28,6 +28,6 @@ class Decorator : ProjectViewNodeDecorator {
 
 private fun decorateByAnnotations(anno: List<Info>, data: PresentationData) {
     if (anno.isNotEmpty()) {
-        data.locationString = anno.joinToString(separator = " ", ) { '\u00AB' + it.displayName + '\u00BB' }
+        data.locationString = anno.joinToString(separator = " ", ) { '\u00AB' + it.concept.name + '\u00BB' }
     }
 }

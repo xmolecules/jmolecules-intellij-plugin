@@ -1,6 +1,8 @@
-package nexos.intellij.jddd.gradle
+package nexos.intellij.ddd.jddd
 
-import nexos.intellij.jddd.CoreLib
+import nexos.intellij.ddd.DDDGroup
+import nexos.intellij.ddd.FrameworkType
+import nexos.intellij.ddd.Provider
 
 class CoreProvider: Provider(CoreLib) {
     companion object {
@@ -10,7 +12,7 @@ class CoreProvider: Provider(CoreLib) {
     override fun getFrameworkType() = CoreFramework.INSTANCE
 }
 
-class CoreFramework: FrameworkType(CoreLib) {
+class CoreFramework: FrameworkType(CoreLib, DDDGroup.INSTANCE) {
     companion object {
         val INSTANCE = CoreFramework()
     }

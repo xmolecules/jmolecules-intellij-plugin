@@ -1,6 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-group = "nexos.intellij.jddd"
+group = "nexos.intellij.ddd"
 
 buildscript {
   repositories {

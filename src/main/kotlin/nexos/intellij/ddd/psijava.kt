@@ -1,4 +1,4 @@
-package nexos.intellij.jddd
+package nexos.intellij.ddd
 
 import com.intellij.psi.PsiJavaFile
 import com.intellij.psi.util.CachedValueProvider
@@ -17,7 +17,7 @@ private fun findTopLevelClassAnnotations(psiFile: PsiJavaFile, annotationsByFQNa
 
 private class Cached(private val file: PsiJavaFile): CachedValueProvider<List<Info>> {
     companion object {
-        val annotationsByFQName: Map<String, Info> by lazy { Info.all.associateBy { it.fqName }}
+        val annotationsByFQName by lazy { all.associateBy { it.fqName }}
     }
 
     override fun compute() = Result(

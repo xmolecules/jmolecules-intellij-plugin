@@ -7,28 +7,36 @@
     <depends>com.intellij.java</depends>
     <description>
     <![CDATA[
-        <p>Providing scopes derived from <a href="https://github.com/odrotbohm/jddd">jDDD</a>
+        <p>Providing scopes for <a href="https://github.com/odrotbohm/jddd">jDDD</a> and <a href="http://jmolecules.org/">jMolecules</a>
             annotations for <a href="https://www.jetbrains.com/help/idea/settings-file-colors.html">File Colors</a>.</p>
         <p>Stereotypes</p>
         <p>External library resolver</p>
-        <p>Facet and framework support under way.</p>
-        <p>More to come.</p>
+        <p>Facet and framework support</p>
         ]]>
   </description>
+    <change-notes>
+        <![CDATA[
+            <ol>
+                <li>0.3: Added support for <a href="http://jmolecules.org/">jMolecules</a></li>
+                <li>0.2 Finalised support for <a href="https://github.com/odrotbohm/jddd">jDDD</a></li>
+                <li>0.1 Added support for <a href="https://github.com/odrotbohm/jddd">jDDD</a></li>
+            </ol>
+        ]]>
+    </change-notes>
     <extensions defaultExtensionNs="com.intellij">
-        <projectViewNodeDecorator implementation="nexos.intellij.jddd.Decorator"/>
-        <facetType implementation="nexos.intellij.jddd.CoreFacetType"/>
-        <facetType implementation="nexos.intellij.jddd.DomainEventType"/>
-        <facetType implementation="nexos.intellij.jddd.ArchitectureLayeredType"/>
-        <frameworkSupport implementation="nexos.intellij.jddd.Support"/>
-        <customScopesProvider implementation="nexos.intellij.jddd.Scopes"/>
+        <projectViewNodeDecorator implementation="nexos.intellij.ddd.Decorator"/>
+        <facetType implementation="nexos.intellij.ddd.jddd.CoreFacetType"/>
+        <facetType implementation="nexos.intellij.ddd.jddd.DomainEventType"/>
+        <facetType implementation="nexos.intellij.ddd.jddd.ArchitectureLayeredType"/>
+        <frameworkSupport implementation="nexos.intellij.ddd.jddd.Support"/>
+        <customScopesProvider implementation="nexos.intellij.ddd.Scopes"/>
     </extensions>
     <extensions defaultExtensionNs="com.intellij.framework">
-        <type implementation="nexos.intellij.jddd.gradle.CoreFramework"/>
-        <type implementation="nexos.intellij.jddd.gradle.DomainEventFramework"/>
-        <type implementation="nexos.intellij.jddd.gradle.ArchitectureLayeredFramework"/>
+        <type implementation="nexos.intellij.ddd.jddd.CoreFramework"/>
+        <type implementation="nexos.intellij.ddd.jddd.DomainEventFramework"/>
+        <type implementation="nexos.intellij.ddd.jddd.ArchitectureLayeredFramework"/>
     </extensions>
     <extensions defaultExtensionNs="com.intellij.codeInsight">
-        <externalLibraryResolver implementation="nexos.intellij.jddd.JDDDLibraryResolver"/>
+        <externalLibraryResolver implementation="nexos.intellij.ddd.DDDLibraryResolver"/>
     </extensions>
 </idea-plugin>

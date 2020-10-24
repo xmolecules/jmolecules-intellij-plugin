@@ -1,6 +1,8 @@
-package nexos.intellij.jddd.gradle
+package nexos.intellij.ddd.jddd
 
-import nexos.intellij.jddd.DomainEventLib
+import nexos.intellij.ddd.DDDGroup
+import nexos.intellij.ddd.FrameworkType
+import nexos.intellij.ddd.Provider
 
 class DomainEventProvider: Provider(DomainEventLib) {
     companion object {
@@ -10,7 +12,7 @@ class DomainEventProvider: Provider(DomainEventLib) {
     override fun getFrameworkType() = DomainEventFramework.INSTANCE
 }
 
-class DomainEventFramework: FrameworkType(DomainEventLib) {
+class DomainEventFramework: FrameworkType(DomainEventLib, DDDGroup.INSTANCE) {
     companion object {
         val INSTANCE = DomainEventFramework()
     }

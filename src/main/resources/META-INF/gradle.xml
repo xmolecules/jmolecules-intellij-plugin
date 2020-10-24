@@ -1,6 +1,6 @@
 <idea-plugin>
   <extensions defaultExtensionNs="org.jetbrains.plugins.gradle">
-    <frameworkSupport implementation="nexos.intellij.jddd.gradle.CoreProvider"/>
-    <frameworkSupport implementation="nexos.intellij.jddd.gradle.DomainEventProvider"/>
+    <frameworkSupport implementation="nexos.intellij.ddd.jddd.CoreProvider"/>
+    <frameworkSupport implementation="nexos.intellij.ddd.jddd.DomainEventProvider"/>
   </extensions>
 </idea-plugin>
