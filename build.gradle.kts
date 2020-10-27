@@ -25,7 +25,7 @@ dependencies {
 plugins {
   java
   kotlin("jvm") version "1.4.10"
-  id("org.jetbrains.intellij") version "0.5.0"
+  id("org.jetbrains.intellij") version "0.5.1"
 }
 
 //val pluginVersion: String by project
