@@ -13,6 +13,8 @@ buildscript {
 repositories {
     mavenCentral()
     jcenter()
+  maven (url= "https://www.jetbrains.com/intellij-repository/releases")
+  maven ( url= "https://jetbrains.bintray.com/intellij-third-party-dependencies" )
 }
 
 dependencies {
@@ -44,7 +46,7 @@ tasks.withType<KotlinCompile> {
 }
 
 intellij {
-  version = "2020.2.3"
+  version = "203.5419-EAP-CANDIDATE-SNAPSHOT"
   downloadSources = true
   setPlugins("java", "org.jetbrains.plugins.gradle", "gradle")
 }
