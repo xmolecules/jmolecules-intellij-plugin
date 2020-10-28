@@ -2,6 +2,7 @@ package nexos.intellij.ddd
 
 import com.intellij.icons.AllIcons
 import com.intellij.ide.highlighter.JavaFileType
+import com.intellij.openapi.project.DumbAware
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiJavaFile
@@ -55,7 +56,7 @@ private class DDDNamedScope(private val concept: Concept):
     override fun hashCode(): Int = concept.hashCode()
 }
 
-class Scopes : CustomScopesProvider {
+class Scopes : CustomScopesProvider, DumbAware {
     companion object {
         private val scopes: MutableList<NamedScope> by lazy { all.groupBy {it.concept}.map { DDDNamedScope(it.key) }.toMutableList() }
     }
