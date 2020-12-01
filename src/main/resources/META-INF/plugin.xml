@@ -1,17 +1,22 @@
 <idea-plugin>
     <id>jddd</id>
-    <name>jDDD</name>
+    <name>DDD Support for jMolecules, jDDD and JPA</name>
     <vendor email="bernd@dutkow.ski" url="https://github.com/nexoscp/intellij-jddd">neXos</vendor>
     <depends optional="true" config-file="gradle.xml">org.jetbrains.plugins.gradle</depends>
     <depends>com.intellij.modules.java</depends>
     <depends>com.intellij.java</depends>
     <description>
     <![CDATA[
-        <p>Providing scopes for JPA, <a href="https://github.com/odrotbohm/jddd">jDDD</a> and <a href="http://jmolecules.org/">jMolecules</a>
-            annotations for <a href="https://www.jetbrains.com/help/idea/settings-file-colors.html">File Colors</a>.</p>
-        <p>Stereotypes</p>
-        <p>External library resolver</p>
-        <p>Facet and framework support</p>
+        <p>DDD Support for <a href="http://jmolecules.org/">jMolecules</a>,
+            <a href="https://github.com/odrotbohm/jddd">jDDD</a>
+            and JPA.
+        </p>
+        <ul>
+            <li><a href="https://www.jetbrains.com/help/idea/settings-scopes.html">Scopes</a></li>
+            <li>Stereotypes</li>
+            <li>External library resolver</li>
+            <li><a href="https://www.jetbrains.com/help/idea/facet-page.html">Facet</a> and framework support</li>
+        </ul>
         ]]>
   </description>
     <change-notes>
