@@ -27,7 +27,7 @@ import nexos.intellij.ddd.SimplifiedInfrastructureRing as ddd_SimplifiedInfrastr
 object jMolecules: Framework("jMolecules") {
     val all by lazy { listOf(
             Entity, AggregateRoot, BoundedContext, Factory, Module, Repository, Service, ValueObject,
-            Events,
+            DomainEvent,
             ApplicationLayer, DomainLayer, InfrastructureLayer, InterfaceLayer,
             ClassicApplicationServiceRing, ClassicDomainModelRing, ClassicInfrastructureRing,
             SimplifiedApplicationRing, SimplifiedDomainRing, SimplifiedInfrastructureRing
@@ -48,7 +48,7 @@ val Repository = Info("org.jmolecules.ddd.annotation.Repository", ddd_Repository
 val Service = Info("org.jmolecules.ddd.annotation.Service", ddd_Service,  DDDLib)
 val ValueObject = Info("org.jmolecules.ddd.annotation.ValueObject", ddd_ValueObject,  DDDLib)
 
-val Events = Info("org.jmolecules.event.annotation.DomainEvent", ddd_DomainEvent,  EventsLib)
+val DomainEvent = Info("org.jmolecules.event.annotation.DomainEvent", ddd_DomainEvent,  EventsLib)
 
 val ApplicationLayer = Info("org.jmolecules.architecture.layered.ApplicationLayer", ddd_ApplicationLayer,  LayeredArchitectureLib)
 val DomainLayer = Info("org.jmolecules.architecture.layered.DomainLayer", ddd_DomainLayer,  LayeredArchitectureLib)

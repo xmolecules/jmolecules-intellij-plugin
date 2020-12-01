@@ -34,7 +34,7 @@ private class DDDPackageSet(private val concept: Concept): AbstractPackageSet(co
         return false
     }
 
-    override fun hashCode(): Int = concept.hashCode()
+    override fun hashCode() = concept.hashCode()
 
     @Deprecated("see com.intellij.psi.search.scope.packageSet.PackageSetBase", ReplaceWith("false"))
     override fun contains(file: VirtualFile, holder: NamedScopesHolder?) = false
