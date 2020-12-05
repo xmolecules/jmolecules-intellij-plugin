@@ -5,17 +5,17 @@ import com.intellij.psi.util.CachedValueProvider
 import com.intellij.psi.util.CachedValueProvider.Result
 import com.intellij.psi.util.CachedValuesManager
 
-private fun findPackageAnnotations(psiFile: PsiJavaFile, annotationsByFQName: Map<String, Info>) =
+fun findPackageAnnotations(psiFile: PsiJavaFile, annotationsByFQName: Map<String, Info>) =
         psiFile.packageStatement
                 ?.annotationList
                 ?.annotations
                 ?.mapNotNull { annotationsByFQName[it.qualifiedName] }
                 ?: listOf()
 
-private fun findTopLevelClassAnnotations(psiFile: PsiJavaFile, annotationsByFQName: Map<String, Info>)
+fun findTopLevelClassAnnotations(psiFile: PsiJavaFile, annotationsByFQName: Map<String, Info>)
         = psiFile.classes.map { it.annotations.mapNotNull { annotationsByFQName[it.qualifiedName] }}.flatten()
 
-private class Cached(private val file: PsiJavaFile): CachedValueProvider<List<Info>> {
+class Cached(private val file: PsiJavaFile): CachedValueProvider<List<Info>> {
     companion object {
         val annotationsByFQName by lazy { all.associateBy { it.fqName }}
     }

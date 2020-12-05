@@ -18,8 +18,9 @@ repositories {
 }
 
 dependencies {
-  testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.6.2")
-  testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine", "5.6.2")
+  implementation("org.junit.jupiter:junit-jupiter:5.7.0")
+  testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.7.0")
+  testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine", "5.7.0")
   runtimeOnly("org.jetbrains.kotlin","kotlin-reflect", "1.4.10")
   implementation(kotlin("stdlib-jdk8"))
 }
@@ -43,6 +44,10 @@ tasks.withType<KotlinCompile> {
     jvmTarget = "11"
   //  freeCompilerArgs = listOf("-XXLanguage:+InlineClasses")
   }
+}
+
+tasks.withType<Test> {
+  useJUnitPlatform()
 }
 
 intellij {
