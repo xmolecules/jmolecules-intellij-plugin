@@ -1,6 +1,7 @@
 <idea-plugin>
     <id>jmolecules-intellij</id>
     <name>jMolecules support for IntelliJ IDEA</name>
+    <idea-version since-build="IC-201" />
     <vendor email="info@xmolecules.org" url="https://github.com/xmolecules/jmolecules-intellij-plugin">xMolecules</vendor>
     <depends optional="true" config-file="gradle.xml">org.jetbrains.plugins.gradle</depends>
     <depends>com.intellij.modules.java</depends>
@@ -15,7 +16,7 @@
             <li><a href="https://www.jetbrains.com/help/idea/facet-page.html">Facet</a> and framework support</li>
         </ul>
         ]]>
-  </description>
+    </description>
     <change-notes>
         <![CDATA[
             <ol>
