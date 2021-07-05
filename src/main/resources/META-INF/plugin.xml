@@ -19,14 +19,15 @@
     </description>
     <change-notes>
         <![CDATA[
-            <ol>
+            <ul>
+                <li>0.7: Automate release builds</li>
                 <li>0.6: Plugin metadata polish</li>
                 <li>0.5: move to xMolecules</li>
                 <li>0.4: Added support for JPA</li>
                 <li>0.3: Added support for <a href="http://jmolecules.org/">jMolecules</a></li>
-                <li>0.2 Finalised support for <a href="https://github.com/odrotbohm/jddd">jDDD</a></li>
-                <li>0.1 Added support for <a href="https://github.com/odrotbohm/jddd">jDDD</a></li>
-            </ol>
+                <li>0.2: Finalised support for <a href="https://github.com/odrotbohm/jddd">jDDD</a></li>
+                <li>0.1: Added support for <a href="https://github.com/odrotbohm/jddd">jDDD</a></li>
+            </ul>
         ]]>
     </change-notes>
     <extensions defaultExtensionNs="com.intellij">
