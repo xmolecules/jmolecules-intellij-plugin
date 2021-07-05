@@ -56,5 +56,5 @@ intellij {
 
 tasks.publishPlugin {
   token.set(System.getenv("PUBLISH_TOKEN"))
-  channels.set(version.toString().split('-').getOrElse(1) { "default" }.split('.'))
+  channels.set(listOf(version.toString().split('-').getOrElse(1) { "default" }.split('.').first()))
 }
