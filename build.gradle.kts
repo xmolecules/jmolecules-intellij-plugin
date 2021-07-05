@@ -6,7 +6,7 @@ buildscript {
   repositories {
     mavenCentral()
   }
-  dependencies { classpath(kotlin("gradle-plugin", "1.4.10")) }
+  //dependencies { classpath(kotlin("gradle-plugin", "1.4.10")) }
 }
 
 repositories {
@@ -19,14 +19,14 @@ dependencies {
   implementation("org.junit.jupiter:junit-jupiter:5.7.0")
   testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.7.0")
   testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine", "5.7.0")
-  runtimeOnly("org.jetbrains.kotlin","kotlin-reflect", "1.4.10")
-  implementation(kotlin("stdlib-jdk8"))
+  runtimeOnly("org.jetbrains.kotlin","kotlin-reflect", "1.5.10")
+ // implementation(kotlin("stdlib-jdk8"))
 }
 
 plugins {
   java
-  kotlin("jvm") version "1.4.10"
-  id("org.jetbrains.intellij") version "0.6.3"
+  id("org.jetbrains.kotlin.jvm") version "1.5.10"
+  id("org.jetbrains.intellij") version "1.0"
 }
 
 //val pluginVersion: String by project
@@ -49,11 +49,12 @@ tasks.withType<Test> {
 }
 
 intellij {
-  downloadSources = true
-  setPlugins("java", "org.jetbrains.plugins.gradle", "gradle")
+  downloadSources.set(true)
+//  plugins.set(listOf("java", "org.jetbrains.plugins.gradle", "gradle"))
+  plugins.set(listOf("java", "org.jetbrains.plugins.gradle"))
 }
 
 tasks.publishPlugin {
-  token(System.getenv("PUBLISH_TOKEN"))
-  channels(version.toString().split('-').getOrElse(1) { "default" }.split('.').first())
+  token.set(System.getenv("PUBLISH_TOKEN"))
+  channels.set(version.toString().split('-').getOrElse(1) { "default" }.split('.'))
 }
