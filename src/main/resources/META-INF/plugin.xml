@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>jddd</id>
     <name>DDD Support for jMolecules, jDDD and JPA</name>
-    <vendor email="bernd@dutkow.ski" url="https://github.com/nexoscp/intellij-jddd">neXos</vendor>
+    <vendor email="info@xmolecules.org" url="https://github.com/xmolecules/jmolecules-intellij-plugin">xMolecules</vendor>
     <depends optional="true" config-file="gradle.xml">org.jetbrains.plugins.gradle</depends>
     <depends>com.intellij.modules.java</depends>
     <depends>com.intellij.java</depends>
