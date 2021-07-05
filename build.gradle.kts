@@ -10,13 +10,13 @@ buildscript {
 }
 
 repositories {
-    mavenCentral()
+  mavenCentral()
   maven (url= "https://www.jetbrains.com/intellij-repository/releases")
   maven ( url= "https://jetbrains.bintray.com/intellij-third-party-dependencies" )
 }
 
 dependencies {
-  implementation("org.junit.jupiter:junit-jupiter:5.7.0")
+  testImplementation("org.junit.jupiter:junit-jupiter:5.7.0")
   testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.7.0")
   testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine", "5.7.0")
   runtimeOnly("org.jetbrains.kotlin","kotlin-reflect", "1.5.10")
