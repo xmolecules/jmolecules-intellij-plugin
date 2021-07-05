@@ -1,16 +1,14 @@
 <idea-plugin>
     <id>jddd</id>
-    <name>DDD Support for jMolecules, jDDD and JPA</name>
+    <name>jMolecules support</name>
+    <idea-version since-build="201.8743.12" />
     <vendor email="info@xmolecules.org" url="https://github.com/xmolecules/jmolecules-intellij-plugin">xMolecules</vendor>
     <depends optional="true" config-file="gradle.xml">org.jetbrains.plugins.gradle</depends>
     <depends>com.intellij.modules.java</depends>
     <depends>com.intellij.java</depends>
     <description>
     <![CDATA[
-        <p>DDD Support for <a href="http://jmolecules.org/">jMolecules</a>,
-            <a href="https://github.com/odrotbohm/jddd">jDDD</a>
-            and JPA.
-        </p>
+        <p><a href="http://jmolecules.org/">jMolecules</a> support</p>
         <ul>
             <li><a href="https://www.jetbrains.com/help/idea/settings-scopes.html">Scopes</a></li>
             <li>Stereotypes</li>
@@ -18,7 +16,7 @@
             <li><a href="https://www.jetbrains.com/help/idea/facet-page.html">Facet</a> and framework support</li>
         </ul>
         ]]>
-  </description>
+    </description>
     <change-notes>
         <![CDATA[
             <ol>

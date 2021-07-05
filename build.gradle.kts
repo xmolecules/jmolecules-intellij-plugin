@@ -49,8 +49,8 @@ tasks.withType<Test> {
 }
 
 intellij {
+  updateSinceUntilBuild.set(false)
   downloadSources.set(true)
-//  plugins.set(listOf("java", "org.jetbrains.plugins.gradle", "gradle"))
   plugins.set(listOf("java", "org.jetbrains.plugins.gradle"))
 }
 
