@@ -20,6 +20,7 @@
     <change-notes>
         <![CDATA[
             <ol>
+                <li>0.6: Plugin metadata polish</li>
                 <li>0.5: move to xMolecules</li>
                 <li>0.4: Added support for JPA</li>
                 <li>0.3: Added support for <a href="http://jmolecules.org/">jMolecules</a></li>
