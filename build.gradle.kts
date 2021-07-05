@@ -5,14 +5,12 @@ group = "nexos.intellij.ddd"
 buildscript {
   repositories {
     mavenCentral()
-    jcenter()
   }
   dependencies { classpath(kotlin("gradle-plugin", "1.4.10")) }
 }
 
 repositories {
     mavenCentral()
-    jcenter()
   maven (url= "https://www.jetbrains.com/intellij-repository/releases")
   maven ( url= "https://jetbrains.bintray.com/intellij-third-party-dependencies" )
 }
@@ -51,7 +49,6 @@ tasks.withType<Test> {
 }
 
 intellij {
-  version = "203.5419-EAP-CANDIDATE-SNAPSHOT"
   downloadSources = true
   setPlugins("java", "org.jetbrains.plugins.gradle", "gradle")
 }
