@@ -26,7 +26,7 @@ dependencies {
 plugins {
   java
   id("org.jetbrains.kotlin.jvm") version "1.5.10"
-  id("org.jetbrains.intellij") version "1.0"
+  id("org.jetbrains.intellij") version "1.1.2"
 }
 
 //val pluginVersion: String by project
