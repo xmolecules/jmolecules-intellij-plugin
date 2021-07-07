@@ -28,6 +28,7 @@
     </change-notes>
     <extensions defaultExtensionNs="com.intellij">
         <projectViewNodeDecorator implementation="org.xmolecules.ide.intellij.JMoleculesDecorator" />
+        <treeStructureProvider implementation="org.xmolecules.ide.intellij.JMoleculesTreeStructureProvider" />
         <facetType implementation="nexos.intellij.ddd.jddd.CoreFacetType"/>
         <facetType implementation="nexos.intellij.ddd.jddd.DomainEventType"/>
         <facetType implementation="nexos.intellij.ddd.jddd.ArchitectureLayeredType"/>
