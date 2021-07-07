@@ -8,10 +8,10 @@
     <depends>com.intellij.java</depends>
     <description>
     <![CDATA[
-        <p><a href="http://jmolecules.org/">jMolecules</a> support</p>
+        <p>Support for <a href="http://jmolecules.org/">jMolecules</a> abstractions in code</p>
         <ul>
+            <li>Project view decoration of stereotypes</li>
             <li><a href="https://www.jetbrains.com/help/idea/settings-scopes.html">Scopes</a></li>
-            <li>Stereotypes</li>
             <li>External library resolver</li>
             <li><a href="https://www.jetbrains.com/help/idea/facet-page.html">Facet</a> and framework support</li>
         </ul>
@@ -20,18 +20,14 @@
     <change-notes>
         <![CDATA[
             <ul>
-                <li>0.7: Automate release builds</li>
-                <li>0.6: Plugin metadata polish</li>
-                <li>0.5: move to xMolecules</li>
-                <li>0.4: Added support for JPA</li>
-                <li>0.3: Added support for <a href="http://jmolecules.org/">jMolecules</a></li>
-                <li>0.2: Finalised support for <a href="https://github.com/odrotbohm/jddd">jDDD</a></li>
-                <li>0.1: Added support for <a href="https://github.com/odrotbohm/jddd">jDDD</a></li>
+                <li><a href="https://github.com/xmolecules/jmolecules-intellij-plugin/issues/3">GH-3</a> - Support for meta-annotations and annotations on super types.</li>                
+                <li><a href="https://github.com/xmolecules/jmolecules-intellij-plugin/issues/2">GH-2</a> - Support for jMolecules DDD interface types.</li>
+                <li><a href="https://github.com/xmolecules/jmolecules-intellij-plugin/issues/1">GH-1</a> - Support for Spring stereotype annotations.</li>
             </ul>
         ]]>
     </change-notes>
     <extensions defaultExtensionNs="com.intellij">
-        <projectViewNodeDecorator implementation="nexos.intellij.ddd.Decorator"/>
+        <projectViewNodeDecorator implementation="org.xmolecules.ide.intellij.JMoleculesDecorator" />
         <facetType implementation="nexos.intellij.ddd.jddd.CoreFacetType"/>
         <facetType implementation="nexos.intellij.ddd.jddd.DomainEventType"/>
         <facetType implementation="nexos.intellij.ddd.jddd.ArchitectureLayeredType"/>

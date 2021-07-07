@@ -3,3 +3,10 @@
 /.idea/
 *.iml
 /build.publish.sh
+
+# Eclipse
+.project
+.classpath
+.settings/
+bin/
+
