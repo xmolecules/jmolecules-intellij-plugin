@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>jddd</id>
     <name>jMolecules support</name>
-    <idea-version since-build="201.8743.12" />
+    <idea-version since-build="202.8194.7" />
     <vendor email="info@xmolecules.org" url="https://github.com/xmolecules/jmolecules-intellij-plugin">xMolecules</vendor>
     <depends optional="true" config-file="gradle.xml">org.jetbrains.plugins.gradle</depends>
     <depends>com.intellij.modules.java</depends>
