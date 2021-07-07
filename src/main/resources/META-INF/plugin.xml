@@ -20,7 +20,8 @@
     <change-notes>
         <![CDATA[
             <ul>
-                <li><a href="https://github.com/xmolecules/jmolecules-intellij-plugin/issues/3">GH-3</a> - Support for meta-annotations and annotations on super types.</li>                
+                <li><a href="https://github.com/xmolecules/jmolecules-intellij-plugin/issues/4">GH-4</a> - Dedicated jMolecules node in project view for all stereotyped types.</li>
+                <li><a href="https://github.com/xmolecules/jmolecules-intellij-plugin/issues/3">GH-3</a> - Support for meta-annotations and annotations on super types.</li>
                 <li><a href="https://github.com/xmolecules/jmolecules-intellij-plugin/issues/2">GH-2</a> - Support for jMolecules DDD interface types.</li>
                 <li><a href="https://github.com/xmolecules/jmolecules-intellij-plugin/issues/1">GH-1</a> - Support for Spring stereotype annotations.</li>
             </ul>
