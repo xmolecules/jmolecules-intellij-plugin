@@ -1,5 +1,6 @@
 package nexos.intellij.ddd
 
+/*
 import com.intellij.framework.FrameworkTypeEx
 import com.intellij.icons.AllIcons
 
@@ -13,3 +14,5 @@ abstract class FrameworkType(
 
     override fun getParentGroup():DDDGroup = parent
 }
+
+ */

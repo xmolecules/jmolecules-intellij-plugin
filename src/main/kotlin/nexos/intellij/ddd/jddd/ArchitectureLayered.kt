@@ -1,5 +1,6 @@
 package nexos.intellij.ddd.jddd
 
+/*
 import nexos.intellij.ddd.DDDGroup
 import nexos.intellij.ddd.FrameworkType
 import nexos.intellij.ddd.Provider
@@ -19,3 +20,5 @@ class ArchitectureLayeredFramework : FrameworkType(ArchitectureLayeredLib, DDDGr
 
     override fun createProvider() = ArchitectureLayeredProvider.INSTANCE
 }
+
+ */
