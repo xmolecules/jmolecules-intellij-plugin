@@ -4,6 +4,7 @@ import com.intellij.codeInsight.daemon.quickFix.ExternalLibraryResolver
 import com.intellij.openapi.module.Module
 import com.intellij.util.ThreeState
 import com.intellij.util.ThreeState.NO
+import java.util.*
 
 /**
  * Text autocompletion on annotation names.
@@ -15,12 +16,12 @@ import com.intellij.util.ThreeState.NO
 class DDDLibraryResolver : ExternalLibraryResolver() {
     companion object {
         //FIXME create fqName.typename => Info
-        val names by lazy { all.associateBy { it.concept.name.toLowerCase() } }
+        val names by lazy { all.associateBy { it.concept.name.lowercase(Locale.getDefault()) } }
     }
 
     override fun resolveClass(shortClassName: String, isAnnotation: ThreeState, contextModule: Module): ExternalClassResolveResult? {
         if (isAnnotation != NO) {
-            return names[shortClassName.toLowerCase()]?.let { result(it) }
+            return names[shortClassName.lowercase(Locale.getDefault())]?.let { result(it) }
         }
         return null
     }

@@ -1,11 +1,12 @@
 <idea-plugin>
     <id>jddd</id>
     <name>jMolecules support</name>
-    <idea-version since-build="202.8194.7" />
+    <idea-version since-build="232.10203.10" />
     <vendor email="info@xmolecules.org" url="https://github.com/xmolecules/jmolecules-intellij-plugin">xMolecules</vendor>
     <depends optional="true" config-file="gradle.xml">org.jetbrains.plugins.gradle</depends>
     <depends>com.intellij.modules.java</depends>
     <depends>com.intellij.java</depends>
+    <depends>com.intellij.modules.lang</depends>
     <description>
     <![CDATA[
         <p>Support for <a href="http://jmolecules.org/">jMolecules</a> abstractions in code</p>

@@ -15,18 +15,8 @@
  */
 package org.xmolecules.ide.intellij;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
-
-import org.jetbrains.annotations.NotNull;
-
-import com.intellij.ide.favoritesTreeView.ProjectViewNodeWithChildrenList;
 import com.intellij.ide.projectView.PresentationData;
+import com.intellij.ide.projectView.ProjectViewNode;
 import com.intellij.ide.projectView.TreeStructureProvider;
 import com.intellij.ide.projectView.ViewSettings;
 import com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode;
@@ -36,6 +26,16 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * {@link TreeStructureProvider} to group jMolecules stereotyped classes under a dedicated jMolecules node within the
@@ -45,102 +45,89 @@ import com.intellij.psi.PsiManager;
  */
 class JMoleculesTreeStructureProvider implements TreeStructureProvider {
 
-	/*
-	 * (non-Javadoc)
-	 * @see com.intellij.ide.projectView.TreeStructureProvider#modify(com.intellij.ide.util.treeView.AbstractTreeNode, java.util.Collection, com.intellij.ide.projectView.ViewSettings)
-	 */
-	@Override
-	public @NotNull Collection<AbstractTreeNode<?>> modify(@NotNull AbstractTreeNode<?> parent,
-			@NotNull Collection<AbstractTreeNode<?>> children, ViewSettings settings) {
+    @Override
+    public @NotNull Collection<AbstractTreeNode<?>> modify(
+            final @NotNull AbstractTreeNode<?> parent,
+            final @NotNull Collection<AbstractTreeNode<?>> children,
+            final ViewSettings settings) {
+        if (!(parent instanceof PsiDirectoryNode)) {
+            return children;
+        }
+        var project = parent.getProject();
+        var manager = PsiManager.getInstance(project);
+        var fileToNode = new HashMap<PsiFile, PsiFileNode>();
+        var files = children.stream()
+                .filter(PsiFileNode.class::isInstance)
+                .map(PsiFileNode.class::cast)
+                .map(it -> {
+                    final var vf = it.getVirtualFile();
+                    if (vf == null) {
+                        return null;
+                    }
+                    final var file = manager.findFile(vf);
+                    fileToNode.put(file, it);
 
-		if (!(parent instanceof PsiDirectoryNode)) {
-			return children;
-		}
+                    return file;
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+        final Map<Concept, List<PsiFile>> grouped = Concepts.groupByConcept(files);
+        if (grouped.isEmpty()) {
+            return children;
+        }
+        final var stereotype = new StereotypeNode(project, "jMolecules", settings);
+        for (final Entry<Concept, List<PsiFile>> entry : grouped.entrySet()) {
+            var stereotypeNode = new StereotypeNode(project, entry.getKey().getPlural(), settings);
+            entry.getValue().stream()
+                    .map(fileToNode::get)
+                    .forEach(stereotypeNode::addChild);
+            stereotype.addChild(stereotypeNode);
+        }
+        final var result = new ArrayList<AbstractTreeNode<?>>();
+        result.add(stereotype);
+        result.addAll(children);
+        return result;
+    }
 
-		var project = parent.getProject();
-		var manager = PsiManager.getInstance(project);
-		var fileToNode = new HashMap<PsiFile, PsiFileNode>();
+    static class StereotypeNode extends ProjectViewNode<String> {
+        private final List<PsiFileNode> files = new ArrayList<>();
+        private final List<AbstractTreeNode<?>> myChildren;
 
-		var files = children.stream()
-				.filter(PsiFileNode.class::isInstance)
-				.map(PsiFileNode.class::cast)
-				.map(it -> {
+        public StereotypeNode(
+                final Project project,
+                final @NotNull String title,
+                final ViewSettings settings) {
+            super(project, title, settings);
 
-					var file = manager.findFile(it.getVirtualFile());
-					fileToNode.put(file, it);
+            myChildren = new ArrayList<>();
+        }
 
-					return file;
-				})
-				.collect(Collectors.toList());
+        @NotNull
+        @Override
+        public Collection<? extends AbstractTreeNode<?>> getChildren() {
+            return myChildren;
+        }
 
-		Map<Concept, List<PsiFile>> grouped = Concepts.groupByConcept(files);
+        public void addChild(final AbstractTreeNode<?> node) {
+            myChildren.add(node);
+            node.setParent(this);
 
-		if (grouped.isEmpty()) {
-			return children;
-		}
+            if (node instanceof PsiFileNode) {
+                files.add((PsiFileNode) node);
+            }
+        }
 
-		var stereotype = new StereotypeNode(project, "jMolecules", settings);
+        @Override
+        protected void update(final @NotNull PresentationData presentation) {
+            presentation.setPresentableText(getValue());
+        }
 
-		for (Entry<Concept, List<PsiFile>> entry : grouped.entrySet()) {
-
-			var stereotypeNode = new StereotypeNode(project, entry.getKey().getPlural(), settings);
-
-			entry.getValue().stream()
-					.map(it -> fileToNode.get(it))
-					.forEach(stereotypeNode::addChild);
-
-			stereotype.addChild(stereotypeNode);
-		}
-
-		List<AbstractTreeNode<?>> result = new ArrayList<>();
-
-		result.add(stereotype);
-		result.addAll(children);
-
-		return result;
-	}
-
-	static class StereotypeNode extends ProjectViewNodeWithChildrenList<String> {
-
-		private List<PsiFileNode> files = new ArrayList<>();
-
-		public StereotypeNode(Project project, @NotNull String title, ViewSettings settings) {
-			super(project, title, settings);
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * @see com.intellij.ide.favoritesTreeView.ProjectViewNodeWithChildrenList#addChild(com.intellij.ide.util.treeView.AbstractTreeNode)
-		 */
-		@Override
-		public void addChild(AbstractTreeNode<?> node) {
-
-			super.addChild(node);
-
-			if (node instanceof PsiFileNode) {
-				files.add((PsiFileNode) node);
-			}
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * @see com.intellij.ide.util.treeView.PresentableNodeDescriptor#update(com.intellij.ide.projectView.PresentationData)
-		 */
-		@Override
-		protected void update(@NotNull PresentationData presentation) {
-			presentation.setPresentableText(getValue());
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * @see com.intellij.ide.projectView.ProjectViewNode#contains(com.intellij.openapi.vfs.VirtualFile)
-		 */
-		@Override
-		public boolean contains(@NotNull VirtualFile file) {
-
-			return files.stream()
-					.map(PsiFileNode::getVirtualFile)
-					.anyMatch(it -> it.equals(file));
-		}
-	}
+        @Override
+        public boolean contains(final @NotNull VirtualFile file) {
+            return files.stream()
+                    .map(PsiFileNode::getVirtualFile)
+                    .filter(Objects::nonNull)
+                    .anyMatch(it -> it.equals(file));
+        }
+    }
 }
