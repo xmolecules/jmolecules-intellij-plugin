@@ -15,22 +15,6 @@
  */
 package org.xmolecules.ide.intellij;
 
-import static org.xmolecules.ide.intellij.Concepts.Predicates.*;
-import static org.xmolecules.ide.intellij.Concepts.Types.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import com.intellij.lang.jvm.JvmModifier;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiClass;
@@ -38,40 +22,52 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.util.CachedValueProvider;
 import com.intellij.psi.util.CachedValuesManager;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.xmolecules.ide.intellij.Concepts.Predicates.any;
+import static org.xmolecules.ide.intellij.Concepts.Types.hasMethodAnnotatedWith;
+import static org.xmolecules.ide.intellij.Concepts.Types.implementsType;
+import static org.xmolecules.ide.intellij.Concepts.Types.isTypeAnnotatedWith;
 
 /**
  * @author Oliver Drotbohm
  */
 class Concepts {
-
 	private static final Set<Concept> CONCEPTS;
 
 	static {
-
-		Set<Concept> all = new HashSet<>();
-		all.add(new Concept("Factory", "Factories", JMolecules::isFactory));
-		all.add(new Concept("Service", "Services", JMolecules::isService));
-		all.add(new Concept("Repository", "Repositories", any(JMolecules::isRepository, Spring::isRepository)));
-
-		all.add(new Concept("Identifier", "Identifiers", JMolecules::isIdentifier));
-		all.add(new Concept("Value Object", "Value objects",
-				it -> JMolecules.isValueObject(it) && !JMolecules.isIdentifier(it)));
-		all.add(new Concept("Entity", "Entities", it -> JMolecules.isEntity(it) && !JMolecules.isAggregateRoot(it)));
-		all.add(new Concept("Aggregate Root", "Aggregate roots", JMolecules::isAggregateRoot));
-
-		all.add(new Concept("Event", "Events", JMolecules::isEvent));
-		all.add(new Concept("Event listener", "Event listeners",
-				any(JMolecules::isEventListener, Spring::isEventListener)));
-
-		CONCEPTS = Collections.unmodifiableSet(all);
+        CONCEPTS = Set.of(
+				new Concept("Factory", "Factories", JMolecules::isFactory),
+				new Concept("Service", "Services", JMolecules::isService),
+				new Concept("Repository", "Repositories", any(JMolecules::isRepository, Spring::isRepository)),
+				new Concept("Identifier", "Identifiers", JMolecules::isIdentifier),
+				new Concept("Value Object", "Value objects",  it -> JMolecules.isValueObject(it) && !JMolecules.isIdentifier(it)),
+				new Concept("Entity", "Entities", it -> JMolecules.isEntity(it) && !JMolecules.isAggregateRoot(it)),
+				new Concept("Aggregate Root", "Aggregate roots", JMolecules::isAggregateRoot),
+				new Concept("Event", "Events", JMolecules::isEvent),
+				new Concept("Event listener", "Event listeners",
+                any(JMolecules::isEventListener, Spring::isEventListener))
+		);
 	}
 
-	public static Map<Concept, List<PsiFile>> groupByConcept(Collection<PsiFile> files) {
-
-		var result = new TreeMap<Concept, List<PsiFile>>();
-
-		for (PsiFile file : files) {
-			for (Concept concept : getConcepts(file)) {
+	public static @NotNull Map<Concept, List<PsiFile>> groupByConcept(final @NotNull Collection<PsiFile> files) {
+		final var result = new TreeMap<Concept, List<PsiFile>>();
+		for (final PsiFile file : files) {
+			for (final Concept concept : getConcepts(file)) {
 				result.computeIfAbsent(concept, __ -> new ArrayList<>()).add(file);
 			}
 		}
@@ -79,17 +75,16 @@ class Concepts {
 		return result;
 	}
 
-	public static List<Concept> getConcepts(PsiFile file) {
-
+	public static @NotNull List<Concept> getConcepts(final @NotNull PsiFile file) {
 		if (!(file instanceof PsiJavaFile)) {
 			return Collections.emptyList();
 		}
 
-		return CachedValuesManager.getCachedValue((PsiJavaFile) file, () -> {
-			return new CachedValueProvider.Result<>(CONCEPTS.stream()
+		return CachedValuesManager.getCachedValue(file, () ->
+			new CachedValueProvider.Result<>(CONCEPTS.stream()
 					.filter(it -> it.test((PsiJavaFile) file))
-					.collect(Collectors.toList()), (PsiJavaFile) file);
-		});
+					.collect(Collectors.toList()), file)
+		);
 	}
 
 	private static class JMolecules {
@@ -98,43 +93,45 @@ class Concepts {
 		private static final String DDD_BASE_PACKAGE = BASE_PACKAGE + ".ddd";
 		private static final String EVENT_BASE_PACKAGE = BASE_PACKAGE + ".event";
 
-		static boolean isFactory(PsiJavaFile file) {
+		static boolean isFactory(final @NotNull PsiJavaFile file) {
 			return isTypeAnnotatedWith(DDD_BASE_PACKAGE + ".annotation.Factory", file);
 		}
 
-		static boolean isService(PsiJavaFile file) {
+		static boolean isService(final @NotNull PsiJavaFile file) {
 			return isTypeAnnotatedWith(DDD_BASE_PACKAGE + ".annotation.Service", file);
 		}
 
-		static boolean isRepository(PsiJavaFile file) {
+		static boolean isRepository(final @NotNull PsiJavaFile file) {
 			return implementsOrAnnotated(DDD_BASE_PACKAGE, "Repository", file);
 		}
 
-		static boolean isIdentifier(PsiJavaFile file) {
+		static boolean isIdentifier(final @NotNull PsiJavaFile file) {
 			return implementsType(DDD_BASE_PACKAGE + ".types.Identifier", file);
 		}
 
-		static boolean isEntity(PsiJavaFile file) {
+		static boolean isEntity(final @NotNull PsiJavaFile file) {
 			return implementsOrAnnotated(DDD_BASE_PACKAGE, "Entity", file);
 		}
 
-		static boolean isAggregateRoot(PsiJavaFile file) {
+		static boolean isAggregateRoot(final @NotNull PsiJavaFile file) {
 			return implementsOrAnnotated(DDD_BASE_PACKAGE, "AggregateRoot", file);
 		}
 
-		static boolean isValueObject(PsiJavaFile file) {
+		static boolean isValueObject(final @NotNull PsiJavaFile file) {
 			return isTypeAnnotatedWith(DDD_BASE_PACKAGE + ".annotation.ValueObject", file);
 		}
 
-		static boolean isEvent(PsiJavaFile file) {
+		static boolean isEvent(final @NotNull PsiJavaFile file) {
 			return implementsOrAnnotated(EVENT_BASE_PACKAGE, "DomainEvent", file);
 		}
 
-		static boolean isEventListener(PsiJavaFile file) {
+		static boolean isEventListener(final @NotNull PsiJavaFile file) {
 			return isTypeAnnotatedWith(EVENT_BASE_PACKAGE + ".types.DomainEventHandler", file);
 		}
 
-		private static boolean implementsOrAnnotated(String basePackage, String name, PsiJavaFile file) {
+		private static boolean implementsOrAnnotated(final @NotNull String basePackage,
+													 final @NotNull String name,
+													 final @NotNull PsiJavaFile file) {
 
 			return implementsType(basePackage + ".types." + name, file) ||
 					isTypeAnnotatedWith(basePackage + ".annotation." + name, file);
@@ -142,45 +139,39 @@ class Concepts {
 	}
 
 	private static class Spring {
-
 		private static final String BASE_PACKAGE = "org.springframework.data";
 
-		static boolean isRepository(PsiJavaFile file) {
+		static boolean isRepository(final @NotNull PsiJavaFile file) {
 			return implementsType(BASE_PACKAGE + ".repository.Repository", file)
 					|| isTypeAnnotatedWith("org.springframework.stereotype.Repository", file);
 		}
 
-		static boolean isEventListener(PsiJavaFile file) {
+		static boolean isEventListener(final @NotNull PsiJavaFile file) {
 			return hasMethodAnnotatedWith(file, "org.springframework.context.event.EventListener",
 					"org.springframework.transaction.event.TransactionalEventListener");
 		}
 	}
 
 	static class Types {
-
-		static boolean isTypeAnnotatedWith(String annotation, PsiJavaFile file) {
-
+		static boolean isTypeAnnotatedWith(final @NotNull String annotation, final @NotNull PsiJavaFile file) {
 			return Arrays.stream(file.getClasses())
 					.filter(it -> !it.isAnnotationType()) // exclude top-level annotations
-					.flatMap(it -> getAllAnnotations(it))
-					.anyMatch(it -> it.getQualifiedName().equals(annotation));
+					.flatMap(Types::getAllAnnotations)
+					.anyMatch(it -> Objects.equals(it.getQualifiedName(), annotation));
 		}
 
-		static boolean implementsType(String name, PsiJavaFile file) {
-
+		static boolean implementsType(final @NotNull String name, final @NotNull PsiJavaFile file) {
 			return Arrays.stream(file.getClasses())
 					.filter(it -> !it.hasModifier(JvmModifier.ABSTRACT) || it.isInterface())
 					.flatMap(Types::getAllSuperTypes)
-					.flatMap(it -> getAllInterfaces(it))
+					.flatMap(Types::getAllInterfaces)
 					.peek(System.out::println)
-					.anyMatch(it -> it.getQualifiedName().equals(name));
+					.anyMatch(it -> Objects.equals(it.getQualifiedName(), name));
 		}
 
-		static boolean hasMethodAnnotatedWith(PsiJavaFile file, String... name) {
-
-			Predicate<PsiAnnotation> nameMatches = it -> Arrays.asList(name).contains(it.getQualifiedName());
-
-			List<PsiAnnotation> annotations = Arrays.stream(file.getClasses())
+		static boolean hasMethodAnnotatedWith(final @NotNull PsiJavaFile file, final @NotNull String... name) {
+			final Predicate<PsiAnnotation> nameMatches = it -> Arrays.asList(name).contains(it.getQualifiedName());
+			final List<PsiAnnotation> annotations = Arrays.stream(file.getClasses())
 					.flatMap(it -> Arrays.stream(it.getMethods()))
 					.flatMap(it -> Arrays.stream(it.getAnnotations()))
 					.distinct()
@@ -191,48 +182,42 @@ class Concepts {
 			}
 
 			return annotations.stream()
-					.map(it -> it.resolveAnnotationType())
+					.map(PsiAnnotation::resolveAnnotationType)
 					.flatMap(Types::getAllAnnotations)
 					.distinct()
 					.anyMatch(nameMatches);
 		}
 
-		private static Stream<PsiAnnotation> getAllAnnotations(PsiClass type) {
-
+		private static @NotNull Stream<PsiAnnotation> getAllAnnotations(final @Nullable PsiClass type) {
 			if (type == null) {
 				return Stream.empty();
 			}
 
-			List<PsiAnnotation> annotations = Arrays.stream(type.getAnnotations())
+			final List<PsiAnnotation> annotations = Arrays.stream(type.getAnnotations())
 					.filter(it -> !it.getQualifiedName().startsWith("java"))
 					.collect(Collectors.toList());
 
-			Stream<PsiAnnotation> metaAnnotations = annotations.stream()
-					.map(it -> it.resolveAnnotationType())
+			final Stream<PsiAnnotation> metaAnnotations = annotations.stream()
+					.map(PsiAnnotation::resolveAnnotationType)
 					.flatMap(Types::getAllAnnotations);
 
 			return Stream.concat(annotations.stream(), metaAnnotations).distinct();
 		}
 
-		private static Stream<PsiClass> getAllInterfaces(PsiClass type) {
-
-			Stream<PsiClass> interfaces = Arrays.stream(type.getInterfaces());
-			Stream<PsiClass> self = type.isInterface() ? Stream.of(type) : Stream.empty();
-
+		private static @NotNull Stream<PsiClass> getAllInterfaces(final @NotNull PsiClass type) {
+			final Stream<PsiClass> interfaces = Arrays.stream(type.getInterfaces());
+			final Stream<PsiClass> self = type.isInterface() ? Stream.of(type) : Stream.empty();
 			return Stream.concat(self, interfaces.flatMap(Types::getAllInterfaces));
 		}
 
-		private static Stream<PsiClass> getAllSuperTypes(PsiClass type) {
-
-			var thisType = Stream.of(type);
-
+		private static @NotNull Stream<PsiClass> getAllSuperTypes(final @NotNull PsiClass type) {
+			final var thisType = Stream.of(type);
 			if (type.isInterface()) {
 				return thisType;
 			}
+			final var superClass = type.getSuperClass();
 
-			var superClass = type.getSuperClass();
-
-			return superClass == null || superClass.getQualifiedName().equals("java.lang.Object")
+			return superClass == null || Objects.equals(superClass.getQualifiedName(), "java.lang.Object")
 					? thisType
 					: Stream.concat(thisType, getAllSuperTypes(superClass));
 
@@ -240,9 +225,8 @@ class Concepts {
 	}
 
 	static class Predicates {
-
 		@SafeVarargs
-		static <T> Predicate<T> any(Predicate<T>... predicates) {
+		static @NotNull <T> Predicate<T> any(@NotNull final Predicate<T>... predicates) {
 			return it -> Arrays.stream(predicates).anyMatch(predicate -> predicate.test(it));
 		}
 	}

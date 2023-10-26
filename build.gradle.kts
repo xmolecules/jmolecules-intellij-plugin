@@ -6,7 +6,6 @@ buildscript {
   repositories {
     mavenCentral()
   }
-  //dependencies { classpath(kotlin("gradle-plugin", "1.4.10")) }
 }
 
 repositories {
@@ -16,31 +15,28 @@ repositories {
 }
 
 dependencies {
-  testImplementation("org.junit.jupiter:junit-jupiter:5.7.0")
-  testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.7.0")
-  testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine", "5.7.0")
-  runtimeOnly("org.jetbrains.kotlin","kotlin-reflect", "1.5.10")
- // implementation(kotlin("stdlib-jdk8"))
+  testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+  testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.10.0")
+  testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine", "5.10.0")
+  runtimeOnly("org.jetbrains.kotlin","kotlin-reflect", "1.9.10")
 }
 
-plugins {
-  java
-  id("org.jetbrains.kotlin.jvm") version "1.5.10"
-  id("org.jetbrains.intellij") version "1.1.2"
+ plugins {
+  id("java")
+  id("org.jetbrains.kotlin.jvm") version "1.9.10"
+  id("org.jetbrains.intellij") version "1.16.0"
 }
 
-//val pluginVersion: String by project
+val pluginVersion: String by project
 
 tasks.withType<JavaCompile> {
-  sourceCompatibility = "11"
-  targetCompatibility = "11"
+  sourceCompatibility = "17"
+  targetCompatibility = "17"
 }
 
-// compile bytecode to java 11 (default is java 6)
 tasks.withType<KotlinCompile> {
   kotlinOptions {
-    jvmTarget = "11"
-  //  freeCompilerArgs = listOf("-XXLanguage:+InlineClasses")
+    jvmTarget = "17"
   }
 }
 
@@ -51,7 +47,8 @@ tasks.withType<Test> {
 intellij {
   updateSinceUntilBuild.set(false)
   downloadSources.set(true)
-  plugins.set(listOf("java", "org.jetbrains.plugins.gradle"))
+  plugins.set(listOf("java", "org.jetbrains.plugins.gradle", "com.intellij.java"))
+  version.set("2023.2.4")
 }
 
 tasks.publishPlugin {

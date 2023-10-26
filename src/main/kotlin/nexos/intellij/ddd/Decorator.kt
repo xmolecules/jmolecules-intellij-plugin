@@ -22,8 +22,6 @@ class Decorator : ProjectViewNodeDecorator {
             }
         }
     }
-
-    override fun decorate(node: PackageDependenciesNode?, cellRenderer: ColoredTreeCellRenderer?) {}
 }
 
 private fun decorateByAnnotations(anno: List<Info>, data: PresentationData) {
