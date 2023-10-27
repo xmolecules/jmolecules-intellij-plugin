@@ -9,7 +9,7 @@
     <depends>com.intellij.modules.lang</depends>
     <description>
     <![CDATA[
-        <p>Support for <a href="http://jmolecules.org/">jMolecules</a> abstractions in code</p>
+        <p>Support for <a href="https://jmolecules.org/">jMolecules</a> abstractions in code</p>
         <ul>
             <li>Project view decoration of stereotypes</li>
             <li><a href="https://www.jetbrains.com/help/idea/settings-scopes.html">Scopes</a></li>
