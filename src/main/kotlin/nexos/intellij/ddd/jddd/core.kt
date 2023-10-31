@@ -1,5 +1,5 @@
 package nexos.intellij.ddd.jddd
-
+/*
 import nexos.intellij.ddd.DDDGroup
 import nexos.intellij.ddd.FrameworkType
 import nexos.intellij.ddd.Provider
@@ -19,3 +19,5 @@ class CoreFramework: FrameworkType(CoreLib, DDDGroup.INSTANCE) {
 
     override fun createProvider() = CoreProvider.INSTANCE
 }
+
+ */

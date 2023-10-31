@@ -1,5 +1,6 @@
 package nexos.intellij.ddd.jddd
 
+/*
 import com.intellij.facet.ui.FacetBasedFrameworkSupportProvider
 import com.intellij.ide.util.frameworkSupport.FrameworkVersion
 import com.intellij.openapi.roots.JavaProjectModelModificationService
@@ -14,3 +15,5 @@ class Support: FacetBasedFrameworkSupportProvider<DDDFacet>(RootFacetType.INSTAN
         }
     }
 }
+
+ */

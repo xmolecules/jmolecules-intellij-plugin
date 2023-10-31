@@ -1,5 +1,6 @@
 package nexos.intellij.ddd
 
+/*
 import com.intellij.framework.FrameworkGroup
 import com.intellij.icons.AllIcons
 import nexos.intellij.ddd.jddd.jDDD
@@ -14,3 +15,4 @@ class DDDGroup(val framework: Framework, val versions: List<DDDVersion>): Framew
 
     override fun getGroupVersions(): MutableList<DDDVersion> = versions.toMutableList()
 }
+*/

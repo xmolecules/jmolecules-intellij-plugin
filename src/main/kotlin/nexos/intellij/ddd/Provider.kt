@@ -1,5 +1,6 @@
 package nexos.intellij.ddd
 
+/*
 import com.intellij.openapi.externalSystem.model.project.ProjectId
 import com.intellij.openapi.module.JavaModuleType
 import com.intellij.openapi.module.Module
@@ -23,3 +24,4 @@ abstract class Provider(private val library: Library): GradleFrameworkSupportPro
     abstract override fun getFrameworkType(): FrameworkType
 }
 
+*/

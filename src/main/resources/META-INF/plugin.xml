@@ -31,16 +31,16 @@
     <extensions defaultExtensionNs="com.intellij">
         <projectViewNodeDecorator implementation="org.xmolecules.ide.intellij.JMoleculesDecorator" />
         <treeStructureProvider implementation="org.xmolecules.ide.intellij.JMoleculesTreeStructureProvider" />
-        <facetType implementation="nexos.intellij.ddd.jddd.CoreFacetType"/>
-        <facetType implementation="nexos.intellij.ddd.jddd.DomainEventType"/>
-        <facetType implementation="nexos.intellij.ddd.jddd.ArchitectureLayeredType"/>
-        <frameworkSupport implementation="nexos.intellij.ddd.jddd.Support"/>
+        <!-- facetType implementation="nexos.intellij.ddd.jddd.CoreFacetType"/ -->
+        <!-- facetType implementation="nexos.intellij.ddd.jddd.DomainEventType"/ -->
+        <!-- facetType implementation="nexos.intellij.ddd.jddd.ArchitectureLayeredType"/ -->
+        <!-- frameworkSupport implementation="nexos.intellij.ddd.jddd.Support"/ -->
         <customScopesProvider implementation="nexos.intellij.ddd.Scopes"/>
     </extensions>
     <extensions defaultExtensionNs="com.intellij.framework">
-        <type implementation="nexos.intellij.ddd.jddd.CoreFramework"/>
-        <type implementation="nexos.intellij.ddd.jddd.DomainEventFramework"/>
-        <type implementation="nexos.intellij.ddd.jddd.ArchitectureLayeredFramework"/>
+        <!-- type implementation="nexos.intellij.ddd.jddd.CoreFramework"/ -->
+        <!-- type implementation="nexos.intellij.ddd.jddd.DomainEventFramework"/ -->
+        <!-- type implementation="nexos.intellij.ddd.jddd.ArchitectureLayeredFramework"/ -->
     </extensions>
     <extensions defaultExtensionNs="com.intellij.codeInsight">
         <externalLibraryResolver implementation="nexos.intellij.ddd.DDDLibraryResolver"/>

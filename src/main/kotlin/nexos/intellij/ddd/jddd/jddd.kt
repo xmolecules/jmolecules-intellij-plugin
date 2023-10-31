@@ -1,5 +1,6 @@
 package nexos.intellij.ddd.jddd
 
+/*
 import com.intellij.openapi.roots.ExternalLibraryDescriptor
 import nexos.intellij.ddd.Framework
 import nexos.intellij.ddd.Info
@@ -35,4 +36,4 @@ val DomainLayer = Info("org.jddd.architecture.layered.DomainLayer", ddd_DomainLa
 val InfrastructureLayer = Info("org.jddd.architecture.layered.InfrastructureLayer", ddd_InfrastructureLayer,  ArchitectureLayeredLib)
 val InterfaceLayer = Info("org.jddd.architecture.layered.InterfaceLayer",ddd_InterfaceLayer,  ArchitectureLayeredLib)
 val DomainEvent = Info("org.jddd.event.annotation.DomainEvent", ddd_DomainEvent,  DomainEventLib)
-
+*/

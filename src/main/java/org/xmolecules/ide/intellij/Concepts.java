@@ -15,6 +15,10 @@
  */
 package org.xmolecules.ide.intellij;
 
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiJavaFile;
+import com.intellij.psi.util.CachedValueProvider;
+import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.lang.jvm.JvmModifier;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiClass;
@@ -46,21 +50,29 @@ import static org.xmolecules.ide.intellij.Concepts.Types.isTypeAnnotatedWith;
 /**
  * @author Oliver Drotbohm
  */
-class Concepts {
-	private static final Set<Concept> CONCEPTS;
+public class Concepts {
+	public static final Concept FACTORY = new Concept("Factory", "Factories", "black", JMolecules::isFactory);
+	public static final Concept SERVICE = new Concept("Service", "Services", "black", JMolecules::isService);
+	public static final Concept REPOSITORY = new Concept("Repository", "Repositories", "black", any(JMolecules::isRepository, Spring::isRepository));
+	public static final Concept IDENTIFIER = new Concept("Identifier", "Identifiers", "black", JMolecules::isIdentifier);
+	public static final Concept VALUE_OBJECT = new Concept("Value Object", "Value objects", "black", it -> JMolecules.isValueObject(it) && !JMolecules.isIdentifier(it));
+	public static final Concept ENTITY = new Concept("Entity", "Entities", "black", it -> JMolecules.isEntity(it) && !JMolecules.isAggregateRoot(it));
+	public static final Concept AGGREGATE_ROOT = new Concept("Aggregate Root", "Aggregate roots", "black", JMolecules::isAggregateRoot);
+	public static final Concept EVENT = new Concept("Event", "Events", "black", JMolecules::isEvent);
+	public static final Concept EVENT_LISTENER = new Concept("Event listener", "Event listeners", "black",
+			any(JMolecules::isEventListener, Spring::isEventListener));
 
 	static {
-        CONCEPTS = Set.of(
-				new Concept("Factory", "Factories", JMolecules::isFactory),
-				new Concept("Service", "Services", JMolecules::isService),
-				new Concept("Repository", "Repositories", any(JMolecules::isRepository, Spring::isRepository)),
-				new Concept("Identifier", "Identifiers", JMolecules::isIdentifier),
-				new Concept("Value Object", "Value objects",  it -> JMolecules.isValueObject(it) && !JMolecules.isIdentifier(it)),
-				new Concept("Entity", "Entities", it -> JMolecules.isEntity(it) && !JMolecules.isAggregateRoot(it)),
-				new Concept("Aggregate Root", "Aggregate roots", JMolecules::isAggregateRoot),
-				new Concept("Event", "Events", JMolecules::isEvent),
-				new Concept("Event listener", "Event listeners",
-                any(JMolecules::isEventListener, Spring::isEventListener))
+        var CONCEPTS = Set.of(
+				FACTORY,
+				SERVICE,
+				REPOSITORY,
+				IDENTIFIER,
+				VALUE_OBJECT,
+				ENTITY,
+				AGGREGATE_ROOT,
+				EVENT,
+				EVENT_LISTENER
 		);
 	}
 
@@ -80,9 +92,10 @@ class Concepts {
 			return Collections.emptyList();
 		}
 
-		return CachedValuesManager.getCachedValue(file, () ->
-			new CachedValueProvider.Result<>(CONCEPTS.stream()
+		return CachedValuesManager.getCachedValue(file,
+				() -> new CachedValueProvider.Result<>(All.ALL.stream()
 					.filter(it -> it.test((PsiJavaFile) file))
+					.map(ConceptImplementation::getConcept)
 					.collect(Collectors.toList()), file)
 		);
 	}

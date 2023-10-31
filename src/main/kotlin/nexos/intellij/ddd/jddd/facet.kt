@@ -1,5 +1,5 @@
 package nexos.intellij.ddd.jddd
-
+/*
 import com.intellij.facet.Facet
 import com.intellij.facet.FacetType
 import com.intellij.facet.FacetTypeId
@@ -41,3 +41,5 @@ class RootFacetType:  FacetType<DDDFacet, DDDConfiguration>(ID, "jDDD", "jDDD") 
 
     override fun isSuitableModuleType(moduleType: ModuleType<*>?) = moduleType is JavaModuleType
 }
+
+ */
