@@ -59,8 +59,14 @@ class Concepts {
 				new Concept("Entity", "Entities", it -> JMolecules.isEntity(it) && !JMolecules.isAggregateRoot(it)),
 				new Concept("Aggregate Root", "Aggregate roots", JMolecules::isAggregateRoot),
 				new Concept("Event", "Events", JMolecules::isEvent),
-				new Concept("Event listener", "Event listeners",
-                any(JMolecules::isEventListener, Spring::isEventListener))
+				new Concept("Event listener", "Event listeners", any(JMolecules::isEventListener, Spring::isEventListener)),
+				new Concept("Application", "Applications", JMolecules::isHexagonalApplication),
+				new Concept("Port", "Ports", it -> JMolecules.isHexagonalPort(it) && !JMolecules.isHexagonalPrimaryPort(it) && !JMolecules.isHexagonalSecondaryPort(it)),
+				new Concept("Adapter", "Adapters", it -> JMolecules.isHexagonalAdapter(it) && !JMolecules.isHexagonalPrimaryAdapter(it) && !JMolecules.isHexagonalSecondaryAdapter(it)),
+				new Concept("Primary Port", "Primary Ports", JMolecules::isHexagonalPrimaryPort),
+				new Concept("Primary Adapter", "Primary Adapters", JMolecules::isHexagonalPrimaryAdapter),
+				new Concept("Secondary Port", "Secondary Ports", JMolecules::isHexagonalSecondaryPort),
+				new Concept("Secondary Adapter", "Secondary Adapters", JMolecules::isHexagonalSecondaryAdapter)
 		);
 	}
 
@@ -92,6 +98,7 @@ class Concepts {
 		private static final String BASE_PACKAGE = "org.jmolecules";
 		private static final String DDD_BASE_PACKAGE = BASE_PACKAGE + ".ddd";
 		private static final String EVENT_BASE_PACKAGE = BASE_PACKAGE + ".event";
+		private static final String ARCHITECTURE_BASE_PACKAGE = BASE_PACKAGE + ".architecture";
 
 		static boolean isFactory(final @NotNull PsiJavaFile file) {
 			return isTypeAnnotatedWith(DDD_BASE_PACKAGE + ".annotation.Factory", file);
@@ -127,6 +134,34 @@ class Concepts {
 
 		static boolean isEventListener(final @NotNull PsiJavaFile file) {
 			return isTypeAnnotatedWith(EVENT_BASE_PACKAGE + ".types.DomainEventHandler", file);
+		}
+
+		static boolean isHexagonalApplication(final @NotNull PsiJavaFile file) {
+			return isTypeAnnotatedWith(ARCHITECTURE_BASE_PACKAGE + ".hexagonal.Application", file);
+		}
+
+		static boolean isHexagonalPort(final @NotNull PsiJavaFile file) {
+			return isTypeAnnotatedWith(ARCHITECTURE_BASE_PACKAGE + ".hexagonal.Port", file);
+		}
+
+		static boolean isHexagonalAdapter(final @NotNull PsiJavaFile file) {
+			return isTypeAnnotatedWith(ARCHITECTURE_BASE_PACKAGE + ".hexagonal.Adapter", file);
+		}
+
+		static boolean isHexagonalPrimaryPort(final @NotNull PsiJavaFile file) {
+			return isTypeAnnotatedWith(ARCHITECTURE_BASE_PACKAGE + ".hexagonal.PrimaryPort", file);
+		}
+
+		static boolean isHexagonalPrimaryAdapter(final @NotNull PsiJavaFile file) {
+			return isTypeAnnotatedWith(ARCHITECTURE_BASE_PACKAGE + ".hexagonal.PrimaryAdapter", file);
+		}
+
+		static boolean isHexagonalSecondaryPort(final @NotNull PsiJavaFile file) {
+			return isTypeAnnotatedWith(ARCHITECTURE_BASE_PACKAGE + ".hexagonal.SecondaryPort", file);
+		}
+
+		static boolean isHexagonalSecondaryAdapter(final @NotNull PsiJavaFile file) {
+			return isTypeAnnotatedWith(ARCHITECTURE_BASE_PACKAGE + ".hexagonal.SecondaryAdapter", file);
 		}
 
 		private static boolean implementsOrAnnotated(final @NotNull String basePackage,
